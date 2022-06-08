@@ -40,7 +40,7 @@ var server = http.createServer(function (req, resp) {
             ...story,
             link: links[link],
           }));
-
+          resp.writeHead(200, { "Content-Type": "application/json" });
           resp.write(JSON.stringify(newData));
           resp.end();
         });
