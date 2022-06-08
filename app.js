@@ -1,18 +1,14 @@
-const data = require("./helper/data");
-// const bodyParser = require("body-parser");
-
-// app.use(bodyParser.json());
 const express = require("express");
 const app = express();
+const https = require("https");
+const url = "https://time.com/";
+
 app.get("/getTimeStories", (req, resp) => {
-  const https = require("https");
-  const url = "https://time.com/";
   https
     .get(url, (res) => {
-      console.log(res.statusCode);
       res.setEncoding("utf8");
-      let response = "";
 
+      let response = "";
       res.on("data", (data) => {
         response += data;
       });
@@ -36,11 +32,11 @@ app.get("/getTimeStories", (req, resp) => {
           });
         }
 
-        const newObj = latestStories.map((story, link) => ({
+        const newData = latestStories.map((story, link) => ({
           ...story,
           link: links[link],
         }));
-        resp.send(newObj);
+        resp.json(newData);
       });
     })
     .on("error", function (err) {
