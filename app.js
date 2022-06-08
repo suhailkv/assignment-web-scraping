@@ -46,7 +46,8 @@ var server = http.createServer(function (req, resp) {
         });
       })
       .on("error", function (err) {
-        console.log(err);
+        resp.write(JSON.stringify({ message: err }));
+        resp.end();
       });
   } else {
     resp.write(JSON.stringify({ message: "Error occured" }));
